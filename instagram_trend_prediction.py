@@ -17,29 +17,29 @@ from matplotlib.colors import LinearSegmentedColormap
 from wordcloud import WordCloud
 from collections import Counter
 
-# Set the style for the visualizations
+
 plt.style.use('fivethirtyeight')
 sns.set(style='whitegrid')
 
-# Custom color palettes
+
 engagement_cmap = LinearSegmentedColormap.from_list('engagement_colors', ['#1a237e', '#4a148c', '#b71c1c', '#ff6f00', '#ffd600'])
 category_palette = sns.color_palette('viridis', 20)
 
-# Load the data
+
 print("Loading Instagram influencer data...")
 file_path = 'social media influencers-INSTAGRAM - -DEC 2022.csv'
 df = pd.read_csv(file_path, encoding='utf-8')
 
-# Data preprocessing
+
 def preprocess_data(df):
     print("Preprocessing data...")
-    # Make a copy to avoid modifying the original dataframe
+    
     data = df.copy()
     
-    # Rename columns to remove spaces and special characters
+    
     data.columns = [col.strip() for col in data.columns]
     
-    # Convert follower counts from string (with M/K) to numeric values
+    
     def convert_to_numeric(value):
         if pd.isna(value):
             return np.nan
@@ -56,18 +56,18 @@ def preprocess_data(df):
             except:
                 return np.nan
     
-    # Apply conversion to follower and engagement columns
+    
     for col in ['followers', 'Eng. (Auth.)', 'Eng. (Avg.)']:
         data[col] = data[col].apply(convert_to_numeric)
     
-    # Calculate engagement rate (Avg. Engagement / Followers * 100)
+    
     data['engagement_rate'] = (data['Eng. (Avg.)'] / data['followers']) * 100
     
-    # Fill missing values in Category columns with 'Unknown'
+    
     data['Category_1'] = data['Category_1'].fillna('Unknown')
     data['Category_2'] = data['Category_2'].fillna('Unknown')
     
-    # Create influencer tier categories based on follower count
+    
     conditions = [
         (data['followers'] < 10000),
         (data['followers'] >= 10000) & (data['followers'] < 100000),
