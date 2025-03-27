@@ -9,16 +9,16 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
 import re
 
-# Set the style for the visualizations
+
 plt.style.use('fivethirtyeight')
 sns.set(style='whitegrid')
 
-# Load the data
+
 print("Loading Instagram influencer data...")
 file_path = 'social media influencers-INSTAGRAM - -DEC 2022.csv'
 df = pd.read_csv(file_path, encoding='utf-8')
 
-# Data preprocessing
+
 def preprocess_data(df):
     print("Preprocessing data...")
     # Make a copy to avoid modifying the original dataframe
